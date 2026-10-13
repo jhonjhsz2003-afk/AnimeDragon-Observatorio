@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0d17">
+  <meta name="description" content="Observatório AnimeDragon: diagnóstico inteligente da disponibilidade, API, episódios e reprodução do AnimeDragon e AnimeFire.">
+  <title>Observatório • AnimeDragon × AnimeFire</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a href="#painel" class="skip-link">Pular para o painel</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M8 28 19 7l3 11 10-5-8 20-7-9-9 4Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="m17 24 7 9" stroke="#8efcff" stroke-width="2.3" stroke-linecap="round"/></svg></div>
+        <div><strong>Observatório<span class="brand-dot">.</span></strong><small>ANIMEDRAGON × ANIMEFIRE</small></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="nav-heading">PAINEL DE CONTROLE</div>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#painel" class="nav-item active" data-target="painel"><span class="ico">◫</span>Visão geral</a>
+        <a href="#diagnosticos" class="nav-item" data-target="diagnosticos"><span class="ico">⌁</span>Diagnósticos<span class="nav-number" id="nav-total">–</span></a>
+        <a href="#laboratorio" class="nav-item" data-target="laboratorio"><span class="ico">⚙</span>Laboratório</a>
+        <a href="#validacao" class="nav-item" data-target="validacao"><span class="ico">✓</span>Verificação manual</a>
+        <a href="#historico" class="nav-item" data-target="historico"><span class="ico">◷</span>Histórico local</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><div class="tip-symbol">✦</div><strong>Visibilidade sem adivinhação</strong><span>Um HTTP 200 não garante que um anime foi reproduzido. Este painel separa as etapas.</span></div>
+        <div class="side-version"><span class="pulse-dot"></span> Worker Free ready <span>v1.0</span></div>
+      </div>
+    </aside>
+    <div class="main-column">
+      <header class="topbar">
+        <div class="topbar-left"><button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false" id="menu-toggle">☰</button><span class="breadcrumb">Painel <span>/</span> <strong>Visão geral</strong></span></div>
+        <div class="topbar-right"><span class="topbar-time" id="clock" aria-label="Horário local"></span><span class="status-quiet"><i></i> Diagnóstico sob demanda</span><button class="button button-small button-primary" type="button" id="run-top">↻ <span>Executar análise</span></button></div>
+      </header>
+      <main id="painel" class="dashboard">
+        <div class="hero">
+          <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-asterisk">✳</span> CENTRO DE OBSERVABILIDADE</div><h1>Dois sites.<br><span>Uma visão completa.</span></h1><p>Inspecione a saúde do AnimeDragon e AnimeFire, encontre a etapa que falhou e receba um diagnóstico claro, em português.</p><div class="hero-actions"><button id="run-hero" type="button" class="button button-primary button-hero">↻ Iniciar diagnóstico completo <span>↗</span></button><a href="#laboratorio" class="text-link">Configurar teste <span>→</span></a></div><div class="hero-stats"><span><i></i> Sem chaves no navegador</span><span>◈ Cloudflare Free</span><span>◇ Sem instalar banco de dados</span></div></div>
+          <div class="hero-art" aria-hidden="true"><div class="art-glow"></div><div class="art-orbit orbit-outer"></div><div class="art-orbit orbit-inner"></div><div class="art-node art-node-a">A</div><div class="art-node art-node-b">F</div><div class="art-center"><svg viewBox="0 0 72 72" fill="none"><path d="M14 39c11-1 17-17 24-27-1 13 16 16 20 27-4 15-17 21-25 20-12-2-18-9-19-20Z" stroke="#B6B7FF" stroke-width="2" stroke-linejoin="round"/><path d="M29 45c8-6 7-15 12-20 0 9 10 15 5 23-4 6-16 9-17-3Z" fill="url(#fire)"/><defs><linearGradient id="fire" x1="28" y1="23" x2="50" y2="58"><stop stop-color="#5CF4E6"/><stop offset=".55" stop-color="#818BFF"/><stop offset="1" stop-color="#C66DFE"/></linearGradient></defs></svg></div><div class="art-tag art-tag-top">API <b>↗</b></div><div class="art-tag art-tag-bottom">CHECK <b>✓</b></div></div>
+        </div>
+        <div class="section-heading"><div><span class="section-kicker">RESUMO DO SISTEMA</span><h2>Estado geral <span class="section-subtle">em um olhar</span></h2></div><div class="section-heading-end"><span class="last-run" id="last-run">Nenhuma análise executada</span></div></div>
+        <section class="stats-grid" aria-label="Indicadores gerais">
+          <article class="stat-card stat-card-blue"><div class="stat-top"><span>Verificações aprovadas</span><span class="stat-icon">✓</span></div><div class="stat-number" id="count-ok">—</div><div class="stat-bottom"><span class="mini-marker good"></span><span>Sem falhas observadas</span></div></article>
+          <article class="stat-card stat-card-pink"><div class="stat-top"><span>Precisam de atenção</span><span class="stat-icon">!</span></div><div class="stat-number" id="count-warn">—</div><div class="stat-bottom"><span class="mini-marker warn"></span><span>Avisos ou divergências</span></div></article>
+          <article class="stat-card stat-card-red"><div class="stat-top"><span>Falhas detectadas</span><span class="stat-icon">×</span></div><div class="stat-number" id="count-error">—</div><div class="stat-bottom"><span class="mini-marker bad"></span><span>Etapas com erro</span></div></article>
+          <article class="stat-card stat-card-neutral"><div class="stat-top"><span>Não comprovado</span><span class="stat-icon">?</span></div><div class="stat-number" id="count-info">—</div><div class="stat-bottom"><span class="mini-marker neutral"></span><span>Exige teste adicional</span></div></article>
+        </section>
+        <div class="two-columns">
+          <div class="left-content">
+            <section class="panel" aria-labelledby="systems-title">
+              <div class="panel-heading"><div><span class="section-kicker">INFRAESTRUTURA</span><h3 id="systems-title">Seus serviços monitorados</h3></div><span class="micro-badge">3 destinos fixos</span></div>
+              <div class="service-row"><div class="service-logo logo-dragon">D</div><div class="service-content"><strong>AnimeDragon</strong><a href="https://site.anime-dragon.workers.dev" target="_blank" rel="noopener noreferrer">site.anime-dragon.workers.dev ↗</a></div><div class="service-end"><span class="service-state" id="state-dragon">Aguardando</span><small id="time-dragon">— ms</small></div></div>
+              <div class="service-row"><div class="service-logo logo-fire">A</div><div class="service-content"><strong>AnimeFire</strong><a href="https://animefire.one" target="_blank" rel="noopener noreferrer">animefire.one ↗</a></div><div class="service-end"><span class="service-state" id="state-fire">Aguardando</span><small id="time-fire">— ms</small></div></div>
+              <div class="service-row"><div class="service-logo logo-api">{ }</div><div class="service-content"><strong>API AnimeFire</strong><span>api.animefire.one</span></div><div class="service-end"><span class="service-state" id="state-api">Aguardando</span><small id="time-api">— ms</small></div></div>
+            </section>
+            <section class="panel" id="diagnosticos" aria-labelledby="check-title">
+              <div class="panel-heading"><div><span class="section-kicker">ANÁLISE TÉCNICA</span><h3 id="check-title">Resultados do diagnóstico</h3></div><span class="micro-badge" id="check-total">0 testes</span></div>
+              <div class="filter-bar" role="group" aria-label="Filtrar resultados"><button type="button" class="filter active" data-filter="all">Todos <span id="filter-all">—</span></button><button type="button" class="filter" data-filter="error">Falhas</button><button type="button" class="filter" data-filter="warning">Avisos</button><button type="button" class="filter" data-filter="ok">Aprovados</button><button type="button" class="filter" data-filter="info">Pendentes</button></div>
+              <div id="check-results" class="results-list"><div class="empty-state"><div class="empty-orbit">◎</div><strong>Pronto para a primeira análise</strong><p>Execute um diagnóstico para identificar problemas nos dois sites e na comunicação entre eles.</p><button class="button button-outlined" id="run-empty" type="button">Iniciar diagnóstico →</button></div></div>
+            </section>
+            <section class="panel" id="laboratorio" aria-labelledby="lab-title"><div class="panel-heading"><div><span class="section-kicker">LABORATÓRIO</span><h3 id="lab-title">Teste um anime específico</h3></div><span class="micro-badge purple">Configuração segura</span></div><p class="panel-description">Acompanhe a pesquisa AnimeFire e o resultado de reprodução do AnimeDragon. Apenas parâmetros numéricos e nomes são aceitos; nenhum domínio ou URL arbitrário pode ser informado.</p>
+              <form id="test-form" class="form-grid"><label><span>Nome do anime para pesquisa</span><input id="anime-name" type="text" minlength="2" maxlength="72" autocomplete="off" spellcheck="false" value="Black Clover" required><small>Ex.: Black Clover, Overgeared, Solo Leveling</small></label><label><span>ID TMDB para testar reprodução</span><input id="tmdb-id" type="number" min="1" max="9999999999" value="73223" required><small>Por padrão: ID TMDB de Black Clover (2017)</small></label><div class="mode-picker"><span>Profundidade da análise</span><div class="segmented"><button class="seg" type="button" data-mode="quick">Rápida</button><button class="seg active" type="button" data-mode="full">Completa</button></div></div><div class="lab-submit"><button type="submit" class="button button-primary" id="submit-test">Executar teste personalizado ↗</button></div></form>
+              <div class="hint-strip"><span>ⓘ</span><p>A busca AnimeFire usa o nome acima. A chamada ao AnimeDragon usa o ID TMDB digitado. Para comparar o mesmo título nos dois lados, informe o ID TMDB correspondente.</p></div>
+            </section>
+            <section class="panel" id="historico" aria-labelledby="history-title"><div class="panel-heading"><div><span class="section-kicker">RELATÓRIOS</span><h3 id="history-title">Histórico neste navegador</h3></div><button type="button" class="small-text-button" id="clear-history">Limpar</button></div><div id="history-items" class="history-items"><p class="muted-text">Nenhum relatório salvo ainda.</p></div><div class="report-actions"><button type="button" class="button button-outlined" id="export-json" disabled>↓ Exportar JSON</button><button type="button" class="button button-outlined" id="export-txt" disabled>↓ Exportar texto</button></div><p class="muted-footnote">Relatórios são salvos somente no navegador (até 12 execuções). Eles não são enviados a terceiros.</p></section>
+          </div>
+          <div class="right-content">
+            <section class="panel pipeline-panel" aria-labelledby="flow-title"><div class="panel-heading"><div><span class="section-kicker">FLUXO DO EPISÓDIO</span><h3 id="flow-title">Caminho da reprodução</h3></div></div><div class="pipeline"><div class="pipeline-step"><div class="pipeline-bullet">01</div><div><strong>TMDB / AnimeDragon</strong><span>Catálogo e identificação</span></div></div><div class="pipeline-step"><div class="pipeline-bullet">02</div><div><strong>Pesquisa AnimeFire</strong><span>Correspondência do título</span></div></div><div class="pipeline-step"><div class="pipeline-bullet">03</div><div><strong>Anime + episódios</strong><span>Temporadas, ID e idioma</span></div></div><div class="pipeline-step"><div class="pipeline-bullet">04</div><div><strong>Fontes + HLS</strong><span>Dublado, legendado, capítulos</span></div></div><div class="pipeline-step last"><div class="pipeline-bullet">05</div><div><strong>Reprodução real</strong><span>Imagem, som, CORS e dispositivo</span></div></div></div><div class="pipeline-warning">⚠ O último passo exige teste real no navegador.</div></section>
+            <section class="panel" id="validacao" aria-labelledby="manual-title"><div class="panel-heading"><div><span class="section-kicker">TESTES MANUAIS</span><h3 id="manual-title">Validação humana</h3></div></div><p class="panel-description">Estas etapas não podem ser comprovadas apenas consultando APIs. Marque somente depois de testar.</p><div class="manual-list" id="manual-list">
+                <label class="manual-item"><input type="checkbox" value="login"><span class="custom-check"></span><span>Login, cadastro e sair funcionam</span></label>
+                <label class="manual-item"><input type="checkbox" value="play"><span class="custom-check"></span><span>Vídeo inicia com imagem e som</span></label>
+                <label class="manual-item"><input type="checkbox" value="audio"><span class="custom-check"></span><span>Dublado tem prioridade correta</span></label>
+                <label class="manual-item"><input type="checkbox" value="opening"><span class="custom-check"></span><span>Pular abertura avança no tempo</span></label>
+                <label class="manual-item"><input type="checkbox" value="progress"><span class="custom-check"></span><span>Continuar de onde parou funciona</span></label>
+                <label class="manual-item"><input type="checkbox" value="next"><span class="custom-check"></span><span>Próximo episódio abre o correto</span></label>
+                <label class="manual-item"><input type="checkbox" value="mobile"><span class="custom-check"></span><span>Testado em celular e computador</span></label>
+                <label class="manual-item"><input type="checkbox" value="ranking"><span class="custom-check"></span><span>Ranking e privacidade revisados</span></label>
+              </div><div class="manual-progress"><div><span id="manual-done">0 de 8</span><span>Concluídos</span></div><div class="progress-track"><div class="progress-fill" id="manual-fill"></div></div></div></section>
+            <section class="panel insight-panel"><div class="insight-icon">✧</div><h3>Diagnóstico sem falsas certezas.</h3><p>Um HTTP 200 confirma resposta do servidor, não a reprodução do vídeo. A API pode indicar “online” mesmo quando o CDN bloqueia o player.</p><p>Este painel não acessa contas, não altera dados e não tenta contornar bloqueios de conteúdo.</p><a href="#laboratorio">Revisar testes <span>↗</span></a></section>
+          </div>
+        </div>
+        <footer class="footer"><span>© Observatório AnimeDragon · Diagnóstico técnico independente</span><span>Feito para Cloudflare Workers Free <span class="footer-heart">✦</span></span></footer>
+      </main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+name = "animedragon-observatorio"
+main = "src/index.js"
+compatibility_date = "2026-10-12"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "single-page-application"
+
+[observability]
+enabled = true
